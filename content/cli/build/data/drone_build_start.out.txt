@@ -8,3 +8,22 @@ OPTIONS:
    --fork                   fork the build
    --param value, -p value  custom parameters to be injected into the job environment. Format: KEY=value
    
+NOTE:
+This command (re)starts a build from an existing build number, so you always need to provide a build number.
+
+EXAMPLES:
+
+This re-starts a build number 5
+
+`drone build start octocat/hello-world 5`
+
+This re-starts build number 5 with a new build number:
+
+`drone build start --fork octocat/hello-world 5`
+
+This re-starts the latest build for the master branch. This is what you would use for a nightly build job, for example:
+
+`
+drone build start --fork octocat/hello-world \
+  $(drone build last --format="{{ .Number }}" --branch=master octocat/hello-world)
+`
